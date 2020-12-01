@@ -11,3 +11,13 @@ Open file [VIC_SETTINGS.HTML](https://github.com/beddy70/TinyToolBoxC64/edit/mai
 On this page, slide the screen (blue box) area and/or graphics (orange box) area horizontally to select the memory address that you want use. 
 
 ![alt text](https://github.com/beddy70/TinyToolBoxC64/blob/main/boxes.png?raw=true)
+
+You can't locate screen and graphcis area on different bank. 
+
+automaticly the basic and assembler code is generate.
+
+## Options
+
+Multicolor : set multicolor mode of VIC II
+Bitmap : set bitmap on VIC II
+
