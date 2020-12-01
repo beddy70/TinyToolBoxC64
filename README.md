@@ -6,7 +6,7 @@ With this tools to help you set VIC II regsiter to code your project graphics on
 
 ## How use it ?
 
-Open file VIC_SETTINGS.HTML on your web browser. 
+Open file [VIC_SETTINGS.HTML](https://github.com/beddy70/TinyToolBoxC64/edit/main/VIC_SETTINGS.HTML) on your web browser.
 
 
 
