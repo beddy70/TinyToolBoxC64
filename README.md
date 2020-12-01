@@ -18,6 +18,6 @@ automaticly the basic and assembler code is generate.
 
 ## Options
 
-Multicolor : set multicolor mode of VIC II
-Bitmap : set bitmap on VIC II
+* Multicolor : set multicolor mode of VIC II
+* Bitmap : set bitmap on VIC II
 
