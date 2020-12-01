@@ -8,5 +8,5 @@ With this tools to help you set VIC II regsiter to code your project graphics on
 
 Open file [VIC_SETTINGS.HTML](https://github.com/beddy70/TinyToolBoxC64/edit/main/VIC_SETTINGS.HTML) on your web browser.
 
-
+On this page, slide the screen (blue box) area and/or graphics (orange box) area horizontally to select the memory address that you want use. 
 
