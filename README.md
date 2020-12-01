@@ -10,3 +10,4 @@ Open file [VIC_SETTINGS.HTML](https://github.com/beddy70/TinyToolBoxC64/edit/mai
 
 On this page, slide the screen (blue box) area and/or graphics (orange box) area horizontally to select the memory address that you want use. 
 
+![alt text](https://github.com/beddy70/TinyToolBoxC64/blob/main/boxes.png?raw=true)
