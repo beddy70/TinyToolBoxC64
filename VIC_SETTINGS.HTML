@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>VIC II - Settings</title>
+</head>
+<style>
+	.mytitle {
+		font-size: 24px;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 20px;
+		border-radius: 6px;
+		background-color: #F0D030;
+		color: white;
+
+	}
+	.block {
+		display: table;
+		width:100%;
+		z-index: 7;
+	}
+	.lineConfig {
+		display: table-row;
+		height: 60px; 
+		z-index: 8;
+	}
+	.slider {
+		display: table-cell;
+		position: absolute;
+		z-index: 0;
+		left: 0px;
+	}
+	.screen {
+		display: block;
+		text-align: center;
+		vertical-align: middle;
+		width: 100px;
+		background-color: #4060F0;
+		height: 58px;
+		position: absolute;
+		left: 200px;
+		cursor: move;
+		z-index: 10;
+		border-radius: 3px;
+		writing-mode: vertical-rl;
+		text-orientation:sideways;
+		font-size: 12px;
+		color: white;
+			
+	}
+	.charset {
+		display: block;
+		text-align: center;
+		vertical-align: middle;
+		width: 100px;
+		background-color: #F06040;
+		height: 58px;
+		position: absolute;
+		left: 200px;
+		cursor: move;
+		z-index: 10;
+		border-radius: 3px;
+		writing-mode: vertical-rl;
+		text-orientation:sideways;
+		font-size: 12px;
+		color: white;
+
+	}
+	.bank_VIC {
+		display: table-row;
+		height: 40px;
+	}
+	.ROM {
+		display: table-row;
+		height: 40px;
+	}
+	.bank {
+		display: table-cell;
+		text-align: center;
+		width: 25%;
+		background-color: #A0A0D0;
+		border-color: #8080A0;
+		border-width: 1px;
+		border-style: dashed;
+		border-radius: 5px;
+	}
+	.rombasic {
+		display: table-cell;
+		position: absolute;
+		text-align: center;
+		left: 400px;
+		width: 12,5%;
+		background-color: #F0F080;
+		border-color: #A0A080;
+		border-width: 1px;
+		border-style: dashed;
+		
+	}
+	.romkernel {
+		display: table-cell;
+		position: absolute;
+		text-align: center;
+		left: 800px;
+		width: 12,5%;
+		background-color: #F08080;
+		border-color: #A08080;
+		border-width: 1px;
+		border-style: dashed;
+	}
+	.romchar {
+		display: table-cell;
+		position: absolute;
+		text-align: center;
+		left: 800px;
+		width: 12,5%;
+		background-color: #8080F0;
+		border-color: #8080A0;
+		border-width: 1px;
+		border-style: dashed;
+	}
+	.board{
+		margin-top: 10px;
+	}
+	.infoboard {
+		display: inline-block;
+		width: 500px;
+		background-color: #808080;
+		border-color: #000000;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 5px;
+		color:white;
+		padding: 10px;
+		vertical-align: top;
+	}
+	.basicboard {
+		display: inline-block;
+		width: 300px;
+		background-color: #0088FF;
+		border-color: #0000AA;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 5px;
+		color:white;
+		padding: 10px;
+	}
+	.asmboard {
+		display: inline-block;
+		width: 300px;
+		background-color: #000000;
+		border-color: #0000AA;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 5px;
+		color:white;
+		padding: 10px;
+		vertical-align: top;
+	}
+	.ctrlboard {
+		display: inline-block;
+		width: 300px;
+		border-color: #000000;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 5px;
+		color:black;
+		padding: 10px;
+		vertical-align: top;
+		text-align: left;
+	}
+	.warning {
+		color: orange;
+		font-weight: bold;
+	}
+	form p {
+		position: relative;
+	}
+
+	/* Base for label styling */
+	[type="checkbox"]:not(:checked),
+	[type="checkbox"]:checked {
+	  position: absolute;
+	  left: -9999px;
+	}
+	[type="checkbox"]:not(:checked) + label,
+	[type="checkbox"]:checked + label {
+	  position: relative;
+	  padding-left: 1.95em;
+	  cursor: pointer;
+	}
+
+	/* checkbox aspect */
+	[type="checkbox"]:not(:checked) + label:before,
+	[type="checkbox"]:checked + label:before {
+	  content: '';
+	  position: absolute;
+	  left: 0; top: 0;
+	  width: 1.25em; height: 1.25em;
+	  border: 1px solid #ccc;
+	  background: #fff;
+	  border-radius: 4px;
+	  box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+	}
+	/* checked mark aspect */
+	[type="checkbox"]:not(:checked) + label:after,
+	[type="checkbox"]:checked + label:after {
+	  content: '\2713\0020';
+	  position: absolute;
+	  top: .15em; left: .22em;
+	  font-size: 1.3em;
+	  line-height: 0.8;
+	  color: #09ad7e;
+	  transition: all .2s;
+	  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', Arial;
+	}
+	/* checked mark aspect changes */
+	[type="checkbox"]:not(:checked) + label:after {
+	  opacity: 0;
+	  transform: scale(0);
+	}
+	[type="checkbox"]:checked + label:after {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+	/* disabled checkbox */
+	[type="checkbox"]:disabled:not(:checked) + label:before,
+	[type="checkbox"]:disabled:checked + label:before {
+	  box-shadow: none;
+	  border-color: #bbb;
+	  background-color: #ddd;
+	}
+	[type="checkbox"]:disabled:checked + label:after {
+	  color: #999;
+	}
+	[type="checkbox"]:disabled + label {
+	  color: #aaa;
+	}
+	/* accessibility */
+	[type="checkbox"]:checked:focus + label:before,
+	[type="checkbox"]:not(:checked):focus + label:before {
+	  border: 1px solid blue;
+	}
+
+	/* hover style just for information */
+	label:hover:before {
+	  border: 1px solid #4778d9!important;
+	}
+
+/* Useless styles, just for demo design */
+
+body {
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  color: #000;
+}
+h1, h2 {
+  margin-bottom: .25em;
+  font-weight: normal;
+  text-align: center;
+}
+h2 {
+  margin: .25em 0 2em;
+  color: #aaa;
+}
+form {
+  width: 7em;
+  margin: 0 auto;
+}
+
+</style>
+
+<body onload='javascript:init();'>
+	<div class="mytitle">VIC II - Settings Manager</div>
+  <div id="_block" class="block">
+  	<div class="lineConfig">
+  		<div id="_slideArea" class="slider">
+  			<div id="_screen" class="screen" >SCREEN 
+  			</div>
+  		</div>
+  	</div>
+  	<div class="lineConfig">
+  		<div id="_slideArea" class="slider">
+  			<div id="_charset" class="charset" >CHARSET 
+  			</div>
+  		</div>
+  	</div>
+  	<div class="bank_VIC">
+	  	<div id="_bank0" class="bank">BANK 0</br>$0000-$3FFF</div>
+	  	<div id="_bank1" class="bank">BANK 1</br>$4000-$7FFF</div>
+	  	<div id="_bank2" class="bank">BANK 2</br>$8000-$BFFF</div>
+	  	<div id="_bank3" class="bank">BANK 3</br>$C000-$FFFF</div>
+	</div>
+	<div class="ROM">
+	  	<div id="_rombasic" class="rombasic">ROM BASIC</br>$A000-$BFFF</div>
+	  	<div id="_romkernel" class="romkernel">KERNEL</br>$E000-$FFFF</div>
+	  	<div id="_romchar" class="romchar">ROM CHAR</br>$D000-$DFFF</div>
+	</div>
+  </div>
+
+  <div class="board">
+  	<div id="_ctrlboard" class="ctrlboard">
+  		<p>Control:
+  		
+  		<div>
+  			<input type="checkbox" id="_multicolor" /><label for="_multicolor" aria-describedby="label">Mode MultiColor</label></br></br>	
+  			<input type="checkbox" id="_bitmap" /><label for="_bitmap" aria-describedby="label">Mode Bitmap</label></br>
+  		</div>
+  		
+  		
+  		</p>
+  	</div>
+  	<div id="_infoboard" class="infoboard"><pre>INFO:</pre>
+  	</div>
+  	<div id="_basicboard" class="basicboard"><pre>BASIC:</pre>
+  	</div>
+	<div id="_asmboard" class="asmboard"><pre>ASSEMBLEUR:</pre>
+  	</div>
+  </div>
+</body >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	dragElement(document.getElementById("_screen"));
+	dragElement(document.getElementById("_charset"));
+	var page=1;
+	var charmem=4;
+	var bankSelected=0;
+	var GFX_AREA_SIZE=2048;
+	var GFX_AREA_BLOCK_NUM=32;
+	var GFX_AREA_LABEL="CHARSET"
+
+	$('#_multicolor').change(function() 
+	{
+	  if(this.checked == true)
+	  {
+	       
+	  }
+	  init();
+	}); 
+	$('#_bitmap').change(function() 
+	{
+		if(this.checked == true)
+		{
+			GFX_AREA_SIZE=8192;
+			GFX_AREA_BLOCK_NUM=8;
+			GFX_AREA_LABEL="BITMAP"
+			charmem=0;
+			page=8;
+		} else {
+			GFX_AREA_SIZE=2048;
+			GFX_AREA_BLOCK_NUM=32;
+			GFX_AREA_LABEL="CHARSET"
+			charmem=4;
+			page=1;
+
+		}
+	  init();
+	}); 
+
+	function dragElement(elmnt) {
+		var pos_x = 0, oldpos_x = 0;
+		var newXpos;
+		
+		
+		if (document.getElementById(elmnt.id) ) {
+			document.getElementById(elmnt.id ).onmousedown = dragMouseDown;
+		} else {
+			elmnt.onmousedown = dragMouseDown;
+		}
+
+		
+		function dragMouseDown(e) {
+			e = e || window.event;
+			e.preventDefault();
+			// get the mouse cursor position at startup:
+			oldpos_x = e.clientX;
+			//pos4 = e.clientY;
+			document.onmouseup = closeDragElement;
+			// call a function whenever the cursor moves:
+			document.onmousemove = elementDrag;
+		}
+
+		function elementDrag(e) {
+
+			e = e || window.event;
+			e.preventDefault();
+
+			pos_x = oldpos_x - e.clientX;
+			oldpos_x = e.clientX;
+
+			switch(elmnt.id){
+				case "_screen":
+					updateScreenPosition();	
+					break;
+					case "_charset":
+					updateCharsetPosition();	
+					break;
+			}		
+			
+			generateBasicCode();
+			generateAssemblerCode();
+			generateInfo();
+			
+		}
+
+		function closeDragElement() {
+			// stop moving when mouse button is released:
+			init()
+			
+			document.onmouseup = null;
+			document.onmousemove = null;
+		}		
+		
+		function updateScreenPosition(){
+			
+			blockArea = document.getElementById("_block");
+			newXpos = (elmnt.offsetLeft - pos_x);
+
+			page=Math.round((newXpos-getXposition(blockArea))/(getWidth(blockArea)/64));
+				
+			if (newXpos<getXposition(blockArea)) {
+				elmnt.style.left = getXposition(blockArea)+"px";
+			} else if (newXpos>(getWidth(blockArea)-getWidth(elmnt))+getXposition(blockArea)) {
+				elmnt.style.left = (getWidth(blockArea)-getWidth(elmnt))+getXposition(blockArea)+"px";
+			} else {
+				page=Math.round((newXpos-getXposition(blockArea))/(getWidth(blockArea)/64));
+				elmnt.style.left = newXpos + "px";
+			}
+
+			elmnt.innerHTML="SCREEN</br>$"+Number(page*1024).toString(16).padStart(4, '0').toUpperCase()
+			updateBanksColor(page)
+
+			if (document.getElementById("_bitmap").checked==true){
+				charmem=charmem%2+bankSelected*2;
+			} else {
+				charmem=charmem%8+bankSelected*8;
+			}
+		}
+		function updateCharsetPosition(){
+			
+			blockArea = document.getElementById("_block");
+			newXpos = (elmnt.offsetLeft - pos_x);
+
+			charmem=Math.round((newXpos-getXposition(blockArea))/(getWidth(blockArea)/GFX_AREA_BLOCK_NUM));
+				
+			if (newXpos<getXposition(blockArea)) {
+				elmnt.style.left = getXposition(blockArea)+"px";
+			} else if (newXpos>(getWidth(blockArea)-getWidth(elmnt))+getXposition(blockArea)) {
+				elmnt.style.left = (getWidth(blockArea)-getWidth(elmnt))+getXposition(blockArea)+"px";
+			} else {
+				charmem=Math.round((newXpos-getXposition(blockArea))/(getWidth(blockArea)/GFX_AREA_BLOCK_NUM));
+				elmnt.style.left = newXpos + "px";
+			}
+
+			elmnt.innerHTML=GFX_AREA_LABEL+"</br>$"+Number(charmem*GFX_AREA_SIZE).toString(16).padStart(4, '0').toUpperCase();
+			if (document.getElementById("_bitmap").checked==true){
+				updateBanksColor(charmem*8)			
+			} else {
+				updateBanksColor(charmem*2)
+			}
+			page=page%16+bankSelected*16;
+
+		}
+	}
+	function updateBanksColor(page){
+
+		document.getElementById("_bank0").style.backgroundColor='#A0A0D0';
+		document.getElementById("_bank1").style.backgroundColor='#A0A0D0';
+		document.getElementById("_bank2").style.backgroundColor='#A0A0D0';
+		document.getElementById("_bank3").style.backgroundColor='#A0A0D0';
+
+		if (page<16){
+			document.getElementById("_bank0").style.backgroundColor='#C0C0F0';
+			bankSelected=0;
+		} else if ( page>=16 && page<32){
+			document.getElementById("_bank1").style.backgroundColor='#C0C0F0';
+			bankSelected=1;
+		} else if ( page>=32 && page<48){
+			document.getElementById("_bank2").style.backgroundColor='#C0C0F0';
+			bankSelected=2;
+		} else if ( page>=48 ){
+			document.getElementById("_bank3").style.backgroundColor='#C0C0F0';
+			bankSelected=3;
+		}
+	
+	}
+
+	function getXposition(el) {
+			const rect = el.getBoundingClientRect();
+			return rect.left+ window.scrollX;
+	}
+	function getWidth(el) {
+		const rect = el.getBoundingClientRect();
+		return (rect.right-rect.left)+ window.scrollX;	
+	}
+	function reportWindowSize() {
+		init();		
+	}
+	function init(){
+		blockArea = document.getElementById("_block");
+		//screen
+		document.getElementById("_screen").style.width=(getWidth(blockArea)/64)+"px";
+		document.getElementById("_screen").style.left = Math.round((page*getWidth(blockArea))/64+getXposition(blockArea))+"px";
+		document.getElementById("_screen").innerHTML="SCREEN</br>$"+Number(page*1024).toString(16).padStart(4, '0').toUpperCase();
+
+		//charset
+		document.getElementById("_charset").style.width=(getWidth(blockArea)/GFX_AREA_BLOCK_NUM)+"px";
+		document.getElementById("_charset").style.left = Math.round((charmem*getWidth(blockArea))/GFX_AREA_BLOCK_NUM+getXposition(blockArea))+"px";
+		document.getElementById("_charset").innerHTML=GFX_AREA_LABEL+"</br>$"+Number(charmem*GFX_AREA_SIZE).toString(16).padStart(4, '0').toUpperCase();
+		//banks
+		updateBanksColor(page);
+
+		//info & code
+		generateBasicCode()
+		generateAssemblerCode();
+		generateInfo();
+	
+		//ROMS
+		posBasicROM=getmemSize(0xA000);
+		document.getElementById("_rombasic").style.left=(posBasicROM+getXposition(blockArea))+"px";
+		sizeBasicROM=getmemSize(8192);
+		document.getElementById("_rombasic").style.width=sizeBasicROM+"px";
+
+		posKernelROM=getmemSize(0xE000);
+		document.getElementById("_romkernel").style.left=(posKernelROM+getXposition(blockArea))+"px";
+		sizeKernelROM=getmemSize(8192);
+		document.getElementById("_romkernel").style.width=sizeKernelROM+"px";
+
+		posCharlROM=getmemSize(0xD000);
+		document.getElementById("_romchar").style.left=(posCharlROM+getXposition(blockArea))+"px";
+		sizeCharlROM=getmemSize(4096);
+		document.getElementById("_romchar").style.width=sizeCharlROM+"px";
+	}
+	function generateBasicCode(){
+
+		basic=document.getElementById("_basicboard");
+		basicstr="<pre>BASIC CODE:\n\n";
+	
+		basicstr+="POKE 53272,"
+		if (document.getElementById("_bitmap").checked==true){
+			basicstr+=(((charmem)*8)&0x08)|(((page)*16)&0xf0);
+		} else {
+			basicstr+=(((charmem)*2)&0x0E)|(((page)*16)&0xf0);
+		}
+		basicstr+="\n";
+	
+		if ( bankSelected!=0){
+			basicstr+="POKE 56576,(PEEK(56576) AND 252)";
+			if (bankSelected!=3){
+				basicstr+=" OR ";
+				basicstr+=~bankSelected&0x03;
+			}
+			basicstr+="\n";
+		}
+		if (document.getElementById("_multicolor").checked==true){
+			basicstr+="POKE 53270,PEEK(53270)";	
+			basicstr+=" OR ";
+			basicstr+=16;			
+			basicstr+="\n";
+		}
+		if (document.getElementById("_bitmap").checked==true){
+			basicstr+="POKE 53265,PEEK(53265)";
+			basicstr+=" OR ";
+			basicstr+=32;
+			basicstr+="\n";
+		}
+		basicstr+="</pre>";
+
+		basic.innerHTML=basicstr;
+	}
+	function generateAssemblerCode(){
+
+		asm=document.getElementById("_asmboard");
+		asmstr="<pre>ASSEMBLER CODE:\n\n";
+		asmstr+="lda #$";
+		if (document.getElementById("_bitmap").checked==true){
+			asmstr+=Number((((charmem)*8)&0x08)|(((page)*16)&0xf0)).toString(16).padStart(2, '0');
+		} else {
+			asmstr+=Number((((charmem)*2)&0x0E)|(((page)*16)&0xf0)).toString(16).padStart(2, '0');
+		}
+		
+		asmstr+="\n";
+		asmstr+="sta $D018\n\n";
+		
+		asmstr+="lda $DD00\n";
+		asmstr+="and #$fc";
+		if (bankSelected!=3){
+			asmstr+="\nora #$";
+			asmstr+=Number(~bankSelected&0x03).toString(16).padStart(2, '0');
+		}
+		asmstr+="\n";
+		asmstr+="sta $DD00\n";
+	
+		if ( document.getElementById("_multicolor").checked==true ){
+			asmstr+="\n";
+			asmstr+="lda $d016\n";
+			asmstr+="ora #$10\n";
+			asmstr+="sta $d016\n";		
+			
+		} 
+		if ( document.getElementById("_bitmap").checked==true ){
+			asmstr+="\n";
+			asmstr+="lda $d011\n";
+			asmstr+="ora #$20\n";
+			asmstr+="sta $d011\n";		
+			
+		} 
+
+		asmstr+="</pre>";
+
+
+		asm.innerHTML=asmstr;
+	}
+	function generateInfo(){
+
+		info=document.getElementById("_infoboard");
+		infostr="<pre>INFO:\n\n";
+
+		infostr+="VIC II BANK = "+bankSelected+"\n\n";
+		if ( document.getElementById("_multicolor").checked==true ){
+			infostr+="Mode Multicolor\n";
+		} 
+		infostr+="Screen is located in "+(page*1024)+" ($"+Number(page*1024).toString(16).padStart(4, '0')+")\n";
+		infostr+="Charset is located in "+(charmem*GFX_AREA_SIZE)+" ($"+Number(charmem*GFX_AREA_SIZE).toString(16).padStart(4, '0')+")\n\n";
+		spritePtr=(1016+(page*1024));// + (bankSelected*16384));
+		infostr+="Sprite pointers = "+spritePtr+" to "+(spritePtr+7)+" ($"+Number(spritePtr).toString(16).padStart(4, '0')+"-$"+Number(spritePtr+7).toString(16).padStart(4, '0')+")\n";
+		
+		if ( (page*1024>=charmem*GFX_AREA_SIZE) && (page*1024<=((charmem+1)*GFX_AREA_SIZE)-1) ) {
+			infostr+="\n<div class='warning'>Warning! Your screen area is over your graphics area!!!</div>"	
+		}
+
+		infostr+="</pre>";
+		info.innerHTML=infostr;
+
+
+
+
+	}
+	function getmemSize( bytesize ){ 
+
+		blockArea = document.getElementById("_block");
+		blockwith=getWidth(blockArea);
+		return Math.round((blockwith/65536)*bytesize);
+
+	}
+	window.onresize = reportWindowSize;
+
+</script>
+</html>
