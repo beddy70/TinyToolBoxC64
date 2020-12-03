@@ -583,7 +583,9 @@ form {
 		asmstr+="sta $D018\n\n";
 		
 		asmstr+="lda $DD00\n";
-		asmstr+="and #$fc";
+		if (bankSelected!=0){
+			asmstr+="and #$fc";
+		}
 		if (bankSelected!=3){
 			asmstr+="\nora #$";
 			asmstr+=Number(~bankSelected&0x03).toString(16).padStart(2, '0');
