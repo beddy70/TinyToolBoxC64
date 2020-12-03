@@ -584,13 +584,12 @@ form {
 		
 		asmstr+="lda $DD00\n";
 		if (bankSelected!=0){
-			asmstr+="and #$fc";
+			asmstr+="and #$fc\n";
 		}
 		if (bankSelected!=3){
-			asmstr+="\nora #$";
-			asmstr+=Number(~bankSelected&0x03).toString(16).padStart(2, '0');
+			asmstr+="ora #$";
+			asmstr+=Number(~bankSelected&0x03).toString(16).padStart(2, '0')+"\n";
 		}
-		asmstr+="\n";
 		asmstr+="sta $DD00\n";
 	
 		if ( document.getElementById("_multicolor").checked==true ){
@@ -633,9 +632,6 @@ form {
 
 		infostr+="</pre>";
 		info.innerHTML=infostr;
-
-
-
 
 	}
 	function getmemSize( bytesize ){ 
