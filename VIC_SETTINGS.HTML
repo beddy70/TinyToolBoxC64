@@ -14,6 +14,18 @@
 		color: #800000;
 		text-transform: uppercase;
 	}
+	a {
+		color: #804000;
+		text-decoration-style: none;
+		text-decoration-line: none;
+		font-size: 12px;
+	}
+	a:hover {
+		color: #A06000;
+	}
+	.wiki {
+		margin-top: 8px;
+	}
 	.mytitle {
 		font-size: 24px;
 		font-weight: bold;
@@ -28,6 +40,7 @@
 		display: table;
 		width:100%;
 		z-index: 7;
+		margin-bottom: 40px;
 	}
 	.lineConfig {
 		display: table-row;
@@ -54,7 +67,7 @@
 		border-radius: 3px;
 		writing-mode: vertical-rl;
 		text-orientation:sideways;
-		font-size: 12px;
+		font-size: 10px;
 		color: white;
 			
 	}
@@ -72,7 +85,7 @@
 		border-radius: 3px;
 		writing-mode: vertical-rl;
 		text-orientation:sideways;
-		font-size: 12px;
+		font-size: 1àpx;
 		color: white;
 
 	}
@@ -81,8 +94,11 @@
 		height: 40px;
 	}
 	.ROM {
+		position: relative;
 		display: table-row;
 		height: 40px;
+		font-size: 10px;
+
 	}
 	.bank {
 		display: table-cell;
@@ -105,6 +121,10 @@
 		border-width: 1px;
 		border-style: dashed;
 		
+		padding-top: 4px;
+		height: 48px;
+
+		
 	}
 	.romkernel {
 		display: table-cell;
@@ -115,7 +135,9 @@
 		background-color: #F08080;
 		border-color: #A08080;
 		border-width: 1px;
-		border-style: dashed;
+		border-style: dashed;		
+		padding-top: 4px;
+		height: 48px;
 	}
 	.romchar {
 		display: table-cell;
@@ -126,7 +148,26 @@
 		background-color: #8080F0;
 		border-color: #8080A0;
 		border-width: 1px;
+		border-style: dashed;	
+		padding-top: 4px;
+		height: 48px;
+
+	}
+	.romcharshadow {
+		display: table-cell;
+		position: absolute;
+		text-align: center;
+		left: 800px;
+		width: 12,5%;
+		background-color: #A0A0F0;
+		border-color: #8080A0;
+		border-width: 1px;
 		border-style: dashed;
+
+		padding-top: 1px;
+		height: 48px;
+
+
 	}
 	.sbouton {
 		display: inline-block;
@@ -161,7 +202,7 @@
 		cursor: move;
 		z-index: 10;
 		border-radius: 3px;		
-		font-size: 14px;
+		font-size: 12px;
 		color: black;
 		
 		height: 18px;
@@ -306,7 +347,7 @@
 /* Useless styles, just for demo design */
 
 body {
-  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  font: normal 10px Verdana, Arial, sans-serif;
   color: #000;
 }
 h1, h2 {
@@ -347,9 +388,13 @@ form {
 	  	<div id="_bank3" class="bank">BANK 3</br>$C000-$FFFF</div>
 	</div>
 	<div class="ROM">
+		<div id="_romcharshadow1" class="romcharshadow">ROW CHAR</br>(shadow)</br>$1000-$1FFF</div>
+	  	<div id="_romcharshadow2" class="romcharshadow">ROM CHAR</br>(shadow)</br>$9000-$9FFF</div>
 	  	<div id="_rombasic" class="rombasic">ROM BASIC</br>$A000-$BFFF</div>
+	  	<div id="_romchar" class="romchar">ROM CHAR</br>$D000-$DFFF<br>I/O Chips</div>
 	  	<div id="_romkernel" class="romkernel">KERNEL</br>$E000-$FFFF</div>
-	  	<div id="_romchar" class="romchar">ROM CHAR</br>$D000-$DFFF</div>
+	  
+	  	
 	</div>
   </div>
 
@@ -379,6 +424,7 @@ form {
 	<div id="_asmboard" class="asmboard"><pre>ASSEMBLEUR:</pre>
   	</div>
   </div>
+  <div class="wiki"><a href="https://github.com/beddy70/TinyToolBoxC64">Github TinyToolC64</a></div>
 </body >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -631,11 +677,20 @@ form {
 		sizeKernelROM=getmemSize(8192);
 		document.getElementById("_romkernel").style.width=sizeKernelROM+"px";
 
+		posCharlROMShadow1=getmemSize(0x1000);
+		document.getElementById("_romcharshadow1").style.left=(posCharlROMShadow1+getXposition(blockArea))+"px";
+		sizeCharlROMShadow1=getmemSize(4096);
+		document.getElementById("_romcharshadow1").style.width=sizeCharlROMShadow1+"px";
+
+		posCharlROMShadow2=getmemSize(0x9000);
+		document.getElementById("_romcharshadow2").style.left=(posCharlROMShadow2+getXposition(blockArea))+"px";
+		sizeCharlROMShadow2=getmemSize(4096);
+		document.getElementById("_romcharshadow2").style.width=sizeCharlROMShadow2+"px";
+
 		posCharlROM=getmemSize(0xD000);
 		document.getElementById("_romchar").style.left=(posCharlROM+getXposition(blockArea))+"px";
 		sizeCharlROM=getmemSize(4096);
 		document.getElementById("_romchar").style.width=sizeCharlROM+"px";
-
 		
 	}
 	function generateBasicCode(){
