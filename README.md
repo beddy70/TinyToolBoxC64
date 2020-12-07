@@ -23,7 +23,7 @@ automaticly the basic and assembler code is generate.
 
 ## Sprite pointer
 
-![alt text](https://github.com/beddy70/TinyToolBoxC64/blob/main/controlspr.png?raw=true)
+![alt text](https://github.com/beddy70/TinyToolBoxC64/blob/main/controlspr.png?raw=true| width=400))
 
 Here you can choose the index sprite pointer (0 to 255) and you get the address of your sprite in memory. 
 In block info you can get an example for sprite 0 pointer. 
