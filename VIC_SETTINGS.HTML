@@ -5,6 +5,15 @@
   <title>VIC II - Settings</title>
 </head>
 <style>
+	.numdec {
+		display:inline;
+		color: #008000;
+	}
+	.numhex {
+		display:inline;
+		color: #800000;
+		text-transform: uppercase;
+	}
 	.mytitle {
 		font-size: 24px;
 		font-weight: bold;
@@ -119,6 +128,53 @@
 		border-width: 1px;
 		border-style: dashed;
 	}
+	.sbouton {
+		display: inline-block;
+		text-align: center;
+		background-color: #B0B0B0;
+		cursor: move;
+		z-index: 10;
+		border-radius: 3px;		
+		font-size: 14px;
+		color: white;
+		height: 18px;
+		margin-left: 1px;
+		margin-right: 1px;
+		
+
+	
+		margin-top: 4px;
+		border-color: #000000;
+		border-style: solid;
+		border-width: 1px;
+		padding-right: 2px;
+		padding-left: 2px;
+				
+	}
+	.sbouton:hover {
+		color: red;
+	}
+	.slabel {
+		display: inline-block;
+		text-align: center;
+		background-color: #E0E0E0;
+		cursor: move;
+		z-index: 10;
+		border-radius: 3px;		
+		font-size: 14px;
+		color: black;
+		
+		height: 18px;
+		margin-left: 1px;
+		margin-right: 1px;
+	
+		margin-top: 4px;
+		border-color: #808080;
+		border-style: solid;
+		border-width: 1px;
+		padding-right: 8px;
+		padding-left: 8px;
+	}	
 	.board{
 		margin-top: 10px;
 	}
@@ -305,12 +361,19 @@ form {
   			<input type="checkbox" id="_multicolor" /><label for="_multicolor" aria-describedby="label">Mode MultiColor</label></br></br>	
   			<input type="checkbox" id="_bitmap" /><label for="_bitmap" aria-describedby="label">Mode Bitmap</label></br>
   		</div>
-  		
-  		
+
   		</p>
+  		<div>
+  		Sprite memory pointer : 
+		</br><div id='_fastless' class='sbouton'>&#x226A;</div><div id='_less' class='sbouton'>&#60;</div>
+		<div id='_sptr' class='slabel'>POKE XX,N</div>
+		<div id='_great'class='sbouton'>&#62;</div><div id='_fastgreat'class='sbouton'>&#x226B;</div>
+		</div>
+  		
   	</div>
-  	<div id="_infoboard" class="infoboard"><pre>INFO:</pre>
+  	<div id="_infoboard" class="infoboard"><pre>INFO:</pre>  	
   	</div>
+
   	<div id="_basicboard" class="basicboard"><pre>BASIC:</pre>
   	</div>
 	<div id="_asmboard" class="asmboard"><pre>ASSEMBLEUR:</pre>
@@ -328,35 +391,77 @@ form {
 	var GFX_AREA_SIZE=2048;
 	var GFX_AREA_BLOCK_NUM=32;
 	var GFX_AREA_LABEL="CHARSET"
+	var sptrValue= 0;
 
-	$('#_multicolor').change(function() 
+	$(document).ready(function()
 	{
-	  if(this.checked == true)
-	  {
-	       
-	  }
-	  init();
-	}); 
-	$('#_bitmap').change(function() 
-	{
-		if(this.checked == true)
+		$('#_multicolor').change(function() 
 		{
-			GFX_AREA_SIZE=8192;
-			GFX_AREA_BLOCK_NUM=8;
-			GFX_AREA_LABEL="BITMAP"
-			charmem=0;
-			page=8;
-		} else {
-			GFX_AREA_SIZE=2048;
-			GFX_AREA_BLOCK_NUM=32;
-			GFX_AREA_LABEL="CHARSET"
-			charmem=4;
-			page=1;
+		  if(this.checked == true)
+		  {
+		       
+		  }
+		  init();
+		}); 
+		$('#_bitmap').change(function() 
+		{
+			if(this.checked == true)
+			{
+				GFX_AREA_SIZE=8192;
+				GFX_AREA_BLOCK_NUM=8;
+				GFX_AREA_LABEL="BITMAP"
+				charmem=0;
+				page=8;
+			} else {
+				GFX_AREA_SIZE=2048;
+				GFX_AREA_BLOCK_NUM=32;
+				GFX_AREA_LABEL="CHARSET"
+				charmem=4;
+				page=1;
 
-		}
-	  init();
-	}); 
+			}
 
+		  init();
+
+		}); 
+		$('#_fastless').click(function() 
+		{		
+			sptrValue-=10;
+			if (sptrValue<0){
+				sptrValue=0;
+			}
+
+			generateInfo()
+
+		});
+		$('#_less').click(function() 
+		{		
+			sptrValue--;
+			if (sptrValue<0){
+				sptrValue=0;
+			}
+
+			generateInfo()
+		});
+		$('#_great').click(function() 
+		{	
+			sptrValue++;
+			if (sptrValue>255){
+				sptrValue=255;
+			}
+			generateInfo()
+		});
+
+		$('#_fastgreat').click(function() 
+		{		
+			sptrValue+=10;
+			if (sptrValue>255){
+				sptrValue=255;
+			}
+			generateInfo()
+		});
+
+	});
 	function dragElement(elmnt) {
 		var pos_x = 0, oldpos_x = 0;
 		var newXpos;
@@ -530,6 +635,8 @@ form {
 		document.getElementById("_romchar").style.left=(posCharlROM+getXposition(blockArea))+"px";
 		sizeCharlROM=getmemSize(4096);
 		document.getElementById("_romchar").style.width=sizeCharlROM+"px";
+
+		
 	}
 	function generateBasicCode(){
 
@@ -630,8 +737,19 @@ form {
 			infostr+="\n<div class='warning'>Warning! Your screen area is over your graphics area!!!</div>"	
 		}
 
+		infostr+="Example for sprite 0 : POKE "+spritePtr+","+sptrValue;
+
 		infostr+="</pre>";
+
 		info.innerHTML=infostr;
+
+
+		memSprite = (sptrValue*64)+(bankSelected*16384);
+		strmemsptr="<div class='numdec'>"+Number(sptrValue).toString().padStart(3, '0')+"</div> (<div class='numhex'>$"+Number(sptrValue).toString(16).padStart(2, '0')+"</div>) -> ";
+		strmemsptr+="<div class='numdec'>"+Number(memSprite).toString().padStart(5, '0')+"</div> (<div class='numhex'>$"+Number(memSprite).toString(16).padStart(4, '0')+"</div>)";
+		
+		document.getElementById("_sptr").innerHTML=strmemsptr ;
+
 
 	}
 	function getmemSize( bytesize ){ 
